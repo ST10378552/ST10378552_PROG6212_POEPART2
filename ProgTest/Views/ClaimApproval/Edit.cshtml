@@ -1,0 +1,128 @@
+﻿@model ProgTest.Models.ClaimApprovalViewModel
+
+@{
+    ViewData["Title"] = "Edit Claim Approval";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - My Application</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .card {
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        .card-title {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="display-4 text-center mb-4">Edit Claim Approval</h1>
+        <h4 class="text-center mb-4">Update the details below</h4>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Edit Claim Approval Details</h2>
+                        <form asp-action="Edit" method="post" class="needs-validation" novalidate>
+                            <input type="hidden" asp-for="ClaimId" />
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="LecturerName" class="control-label font-weight-bold"></label>
+                                    <input asp-for="LecturerName" class="form-control" readonly />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="HoursWorked" class="control-label font-weight-bold"></label>
+                                    <input asp-for="HoursWorked" class="form-control" readonly />
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="HourlyRate" class="control-label font-weight-bold"></label>
+                                    <input asp-for="HourlyRate" class="form-control" readonly />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="TotalAmount" class="control-label font-weight-bold"></label>
+                                    <input asp-for="TotalAmount" class="form-control" readonly />
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="ClaimDate" class="control-label font-weight-bold"></label>
+                                    <input asp-for="ClaimDate" class="form-control" readonly />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="ApproverRole" class="control-label font-weight-bold"></label>
+                                    <select asp-for="ApproverRole" class="form-control" required>
+                                        <option value="Coordinator">Coordinator</option>
+                                        <option value="Manager">Manager</option>
+                                        <option value="Both">Both</option> <!-- Added Both role -->
+                                    </select>
+                                    <span asp-validation-for="ApproverRole" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Approval Section -->
+                            <div class="form-group">
+                                <label class="font-weight-bold">Approvals</label>
+                                <div class="d-flex flex-column">
+                                    <div class="form-check">
+                                        <input asp-for="IsCoordinatorApproved" type="checkbox" class="form-check-input" />
+                                        <label asp-for="IsCoordinatorApproved" class="form-check-label" title="Check if approved by Coordinator">
+                                            Coordinator Approval
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input asp-for="IsManagerApproved" type="checkbox" class="form-check-input" />
+                                        <label asp-for="IsManagerApproved" class="form-check-label" title="Check if approved by Manager">
+                                            Manager Approval
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input asp-for="IsApproved" type="checkbox" class="form-check-input" />
+                                        <label asp-for="IsApproved" class="form-check-label" title="Check if the claim is rejected">
+                                            Rejected
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="form-group mt-4 text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-save"></i> Save
+                                </button>
+                                <a asp-action="Index" class="btn btn-secondary btn-lg ml-2">
+                                    <i class="fas fa-times"></i> Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    @section Scripts {
+        @await Html.PartialAsync("_ValidationScriptsPartial")
+    }
+</body>
+</html>

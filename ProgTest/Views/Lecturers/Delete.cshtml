@@ -1,0 +1,87 @@
+﻿@model ProgTest.Models.Lecturer
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1 class="text-center text-danger mb-4">Delete Lecturer</h1>
+
+<div class="container my-5">
+    <div class="alert alert-warning text-center" role="alert">
+        <h3 class="fw-bold">Are you sure you want to delete this?</h3>
+        <p>This action cannot be undone.</p>
+    </div>
+
+    <div class="card shadow-sm p-4 bg-light rounded">
+        <h4 class="text-secondary mb-3">Lecturer Details</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3 fw-bold">
+                @Html.DisplayNameFor(model => model.FullName)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.FullName)
+            </dd>
+
+            <dt class="col-sm-3 fw-bold">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+            <dt class="col-sm-3 fw-bold">
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
+        </dl>
+    </div>
+
+    <div class="text-center mt-4">
+        <form asp-action="Delete" class="d-inline">
+            <input type="hidden" asp-for="LecturerId" />
+            <button type="submit" class="btn btn-danger btn-lg me-3">Confirm Delete</button>
+        </form>
+        <a asp-action="Index" class="btn btn-secondary btn-lg">Back to List</a>
+    </div>
+</div>
+
+<!-- Include Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" />
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    h1 {
+        font-family: 'Arial Black', sans-serif;
+        color: #e74c3c;
+    }
+
+    .card {
+        border-radius: 15px;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    dt {
+        font-size: 1.1em;
+    }
+
+    dd {
+        font-size: 1.05em;
+        color: #34495e;
+    }
+
+    .btn-lg {
+        padding: 10px 20px;
+        font-size: 18px;
+    }
+
+    .alert {
+        font-size: 1.2em;
+    }
+</style>

@@ -1,0 +1,96 @@
+﻿@model IEnumerable<ProgTest.Models.ClaimApprovalViewModel>
+@{
+    ViewData["Title"] = "Claim Approvals";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - My Application</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #282c34; /* Matching background color */
+        }
+
+        h2 {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            color: #4a90e2; /* Title color */
+        }
+
+        .table th {
+            text-align: center; /* Center the table headers */
+            background-color: black; /* Set the background color of the header to black */
+            color: white; /* Set the text color of the header to white */
+        }
+
+        .table td {
+            vertical-align: middle; /* Center the table data */
+        }
+
+        .table-bordered th, .table-bordered td {
+            border: 1px solid #dee2e6; /* Border for table cells */
+        }
+
+        .badge-approved {
+            background-color: #28a745; /* Green for approved */
+        }
+
+        .badge-not-approved {
+            background-color: #dc3545; /* Red for not approved */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center text-primary mb-4">Claim Approvals</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Claim ID</th>
+                        <th>Lecturer Name</th>
+                        <th>Hours Worked</th>
+                        <th>Hourly Rate</th>
+                        <th>Total Amount</th>
+                        <th>Claim Date</th>
+                        <th>Coordinator Approval</th>
+                        <th>Manager Approval</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var claim in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@claim.ClaimId</td>
+                            <td>@claim.LecturerName</td>
+                            <td class="text-center">@claim.HoursWorked</td>
+                            <td class="text-center">@string.Format("{0:C}", claim.HourlyRate)</td>
+                            <td class="text-center">@string.Format("{0:C}", claim.TotalAmount)</td>
+                            <td class="text-center">@claim.ClaimDate.ToString("yyyy/MM/dd")</td>
+                            <td class="text-center">
+                                <span class="badge @(claim.IsCoordinatorApproved ? "badge-approved" : "badge-not-approved")">
+                                    @(claim.IsCoordinatorApproved ? "Approved" : "Not Approved")
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge @(claim.IsManagerApproved ? "badge-approved" : "badge-not-approved")">
+                                    @(claim.IsManagerApproved ? "Approved" : "Not Approved")
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <a asp-action="Edit" asp-route-id="@claim.ClaimId" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

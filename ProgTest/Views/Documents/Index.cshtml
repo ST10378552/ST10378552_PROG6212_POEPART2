@@ -1,0 +1,162 @@
+﻿@model IEnumerable<ProgTest.Models.Document>
+@{
+    ViewData["Title"] = "Index";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - My Application</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #282c34; /* Background color for contrast */
+        }
+
+        h1 {
+            font-family: 'Arial Black', sans-serif; /* Modern font for the heading */
+            color: #4a90e2; /* Bright blue color for the heading */
+        }
+
+        .document-item {
+            background-color: #fff; /* White background for document items */
+            border-radius: 10px;
+            padding: 20px; /* Increased padding for more space */
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            height: 220px; /* Adjusted height for smaller cards */
+            overflow: hidden; /* Hide overflow */
+        }
+
+            .document-item:hover {
+                transform: translateY(-5px);
+            }
+
+        .document-title {
+            font-size: 1.5em;
+            color: #34495e; /* Dark blue for document title */
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .info-text {
+            font-size: 1.1em;
+            color: #7f8c8d; /* Gray text color for info */
+            margin-bottom: 15px; /* Increased space between lecturer name and buttons */
+        }
+
+        .button-group {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            border-radius: 20px; /* Rounded buttons */
+            padding: 10px 15px;
+            transition: all 0.3s ease; /* Transition for hover effects */
+            font-weight: bold; /* Bolder font for buttons */
+        }
+
+        .btn-warning {
+            background-color: #f39c12; /* Different color for Edit button */
+            color: white;
+        }
+
+            .btn-warning:hover {
+                background-color: #e67e22; /* Darker on hover */
+            }
+
+        .btn-info {
+            background-color: #3498db; /* Different color for Details button */
+            color: white;
+        }
+
+            .btn-info:hover {
+                background-color: #2980b9; /* Darker on hover */
+            }
+
+        .btn-danger {
+            background-color: #e74c3c; /* Different color for Delete button */
+            color: white;
+        }
+
+            .btn-danger:hover {
+                background-color: #c0392b; /* Darker on hover */
+            }
+
+        .btn-success {
+            background-color: #2ecc71; /* Different color for Download button */
+            color: white;
+        }
+
+            .btn-success:hover {
+                background-color: #27ae60; /* Darker on hover */
+            }
+
+        .create-btn {
+            background-color: #28a745; /* Green button for creating new document */
+            color: white;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-weight: bold;
+        }
+
+            .create-btn:hover {
+                background-color: #218838; /* Darker green on hover */
+            }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="display-4 text-center mb-4">Documents</h1>
+        <div class="d-flex justify-content-between mb-3">
+            <a asp-action="Create" class="create-btn btn-lg">
+                <i class="fas fa-plus-circle icon"></i> Create New Document
+            </a>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="document-item">
+                        <h5 class="document-title">@Html.DisplayFor(modelItem => item.FileName)</h5>
+                        <p class="info-text"><strong>Uploaded By:</strong> @Html.DisplayFor(modelItem => item.Claim.LecturerName)</p>
+                        <div class="button-group">
+                            <a asp-action="Edit" asp-route-id="@item.DocumentId" class="btn btn-warning btn-sm">Edit</a>
+                            <a asp-action="Download" asp-route-id="@item.DocumentId" class="btn btn-success btn-sm">Download</a>
+                            <a class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal-@item.DocumentId">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.DocumentId" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Details Modal -->
+                <div class="modal fade" id="detailsModal-@item.DocumentId" tabindex="-1" aria-labelledby="detailsModalLabel-@item.DocumentId" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="detailsModalLabel-@item.DocumentId">Document Details</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>File Name:</strong> @Html.DisplayFor(modelItem => item.FileName)</p>
+                                <p><strong>File Path:</strong> @Html.DisplayFor(modelItem => item.FilePath)</p>
+                                <p><strong>File Size:</strong> @Html.DisplayFor(modelItem => item.FileSize)</p>
+                                <p><strong>Uploaded Date:</strong> @Html.DisplayFor(modelItem => item.UploadedDate)</p>
+                                <p><strong>Claim:</strong> @Html.DisplayFor(modelItem => item.Claim.LecturerName)</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
